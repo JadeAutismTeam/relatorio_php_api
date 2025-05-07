@@ -1,0 +1,179 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Relatorio Jade API",
+    "description": "API Documentation for Relatorio Jade",
+    "version": "1.0.0",
+    "contact": {
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local development server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "RelatorioDto": {
+        "type": "object",
+        "required": ["uuid", "data", "hora", "codigo", "nome", "sistema"],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the report"
+          },
+          "data": {
+            "type": "string",
+            "format": "date",
+            "description": "Report date"
+          },
+          "hora": {
+            "type": "string",
+            "format": "time",
+            "description": "Report time"
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Report code"
+          },
+          "nome": {
+            "type": "string",
+            "description": "Report name"
+          },
+          "sistema": {
+            "type": "string",
+            "description": "System code"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v2/relatorio-toque/{appSystemKey}/sincronizar": {
+      "post": {
+        "tags": ["Relatorio Toque"],
+        "summary": "Synchronize a single report",
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "appSystemKey",
+            "in": "path",
+            "required": true,
+            "description": "System UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelatorioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "System not found"
+          }
+        }
+      }
+    },
+    "/v2/relatorio-toque/{appSystemKey}/sincronizar/massa": {
+      "post": {
+        "tags": ["Relatorio Toque"],
+        "summary": "Synchronize multiple reports",
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "appSystemKey",
+            "in": "path",
+            "required": true,
+            "description": "System UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RelatorioDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sucesso": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "System not found"
+          }
+        }
+      }
+    }
+  }
+} 
