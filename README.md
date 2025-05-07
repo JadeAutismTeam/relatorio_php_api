@@ -2,6 +2,9 @@
 
 API para gerenciamento e sincronização de relatórios do sistema Jade.
 
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/4b593d2b-f40c-4a4b-8968-6e67069feaf2" />
+
+
 ## Requisitos
 
 - PHP 8.0 ou superior
@@ -13,8 +16,8 @@ API para gerenciamento e sincronização de relatórios do sistema Jade.
 
 1. Clone o repositório:
 ```bash
-git clone [URL_DO_REPOSITÓRIO]
-cd relatorio-jade-api
+git clone https://github.com/JadeAutismTeam/relatorio_php_api
+cd relatorio_php_api
 ```
 
 2. Instale as dependências via Composer:
@@ -31,23 +34,6 @@ composer install
    - Execute as migrações:
    ```bash
    php spark migrate
-   ```
-
-5. Configure o servidor web:
-   - Para Apache, certifique-se de que o mod_rewrite está habilitado
-   - Configure o DocumentRoot para apontar para a pasta `public`
-   - Exemplo de configuração Apache:
-   ```apache
-   <VirtualHost *:80>
-       ServerName localhost
-       DocumentRoot /caminho/para/relatorio-jade-api/public
-       
-       <Directory /caminho/para/relatorio-jade-api/public>
-           Options Indexes FollowSymLinks
-           AllowOverride All
-           Require all granted
-       </Directory>
-   </VirtualHost>
    ```
 
 ## Executando o Projeto
@@ -96,19 +82,3 @@ relatorio-jade-api/
 ├── system/             # Core do CodeIgniter
 └── writable/          # Arquivos de log e cache
 ```
-
-## Desenvolvimento
-
-1. Para executar os testes:
-```bash
-./vendor/bin/phpunit
-```
-
-2. Para gerar relatório de cobertura de código:
-```bash
-./vendor/bin/phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/
-```
-
-## Suporte
-
-Para suporte, entre em contato através do email: support@example.com
